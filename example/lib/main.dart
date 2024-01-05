@@ -18,9 +18,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  DeviceOrientation _deviceOrientation;
+  late DeviceOrientation _deviceOrientation;
 
-  StreamSubscription<DeviceOrientation> subscription;
+  late StreamSubscription<DeviceOrientation> subscription;
 
   @override
   void initState() {
@@ -65,8 +65,7 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(
-                  'Running on: ${_deviceOrientation ?? 'Unknown Orientation'}\n'),
+              Text('Running on: ${_deviceOrientation ?? 'Unknown Orientation'}\n'),
               ElevatedButton(
                   child: Text('FullScreen'),
                   onPressed: () {
@@ -75,8 +74,7 @@ class _MyAppState extends State<MyApp> {
               ElevatedButton(
                   child: Text('NormalScreen'),
                   onPressed: () {
-                    OrientationHelper.setEnabledSystemUIOverlays(
-                        SystemUiOverlay.values);
+                    OrientationHelper.setEnabledSystemUIOverlays(SystemUiOverlay.values);
                   }),
               Spacer(),
               Padding(

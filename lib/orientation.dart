@@ -5,28 +5,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class OrientationPlugin {
-  static const _methodChannel =
-      const MethodChannel('sososdk.github.com/orientation');
+  static const _methodChannel = const MethodChannel('sososdk.github.com/orientation');
 
-  static const _eventChannel =
-      const EventChannel('sososdk.github.com/orientationEvent');
+  static const _eventChannel = const EventChannel('sososdk.github.com/orientationEvent');
 
   /// see [SystemChrome.setEnabledSystemUIOverlays]
-  static Future<void> setEnabledSystemUIOverlays(
-      List<SystemUiOverlay> overlays) async {
+  static Future<void> setEnabledSystemUIOverlays(List<SystemUiOverlay> overlays) async {
     if (Platform.isAndroid) {
       await _methodChannel.invokeMethod<void>(
         'SystemChrome.setEnabledSystemUIOverlays',
         _stringify(overlays),
       );
     } else {
-      SystemChrome.setEnabledSystemUIOverlays(overlays);
+      // SystemChrome.setEnabledSystemUIOverlays(overlays);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: overlays);
     }
   }
 
   /// see [SystemChrome.setPreferredOrientations]
-  static Future<void> setPreferredOrientations(
-      List<DeviceOrientation> orientations) async {
+  static Future<void> setPreferredOrientations(List<DeviceOrientation> orientations) async {
     await _methodChannel.invokeMethod<void>(
       'SystemChrome.setPreferredOrientations',
       _stringify(orientations),
@@ -51,9 +48,7 @@ class OrientationPlugin {
 
   static Stream<DeviceOrientation> get onOrientationChange {
     if (_onOrientationChange == null) {
-      _onOrientationChange = _eventChannel
-          .receiveBroadcastStream()
-          .map((event) => _convert(event));
+      _onOrientationChange = _eventChannel.receiveBroadcastStream().map((event) => _convert(event));
     }
     return _onOrientationChange!;
   }

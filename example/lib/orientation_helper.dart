@@ -3,13 +3,11 @@ import 'package:orientation/orientation.dart';
 import 'package:rxdart/rxdart.dart';
 
 class OrientationHelper {
-  static Future<void> setEnabledSystemUIOverlays(
-      List<SystemUiOverlay> overlays) {
+  static Future<void> setEnabledSystemUIOverlays(List<SystemUiOverlay> overlays) {
     return OrientationPlugin.setEnabledSystemUIOverlays(overlays);
   }
 
-  static Future<void> setPreferredOrientations(
-      List<DeviceOrientation> orientations) {
+  static Future<void> setPreferredOrientations(List<DeviceOrientation> orientations) {
     return OrientationPlugin.setPreferredOrientations(orientations);
   }
 
@@ -20,7 +18,7 @@ class OrientationHelper {
   /// [DeviceOrientation.portraitUp] is default.
   static final DeviceOrientation initOrientation = DeviceOrientation.portraitUp;
 
-  static Stream<DeviceOrientation> _onOrientationChange;
+  static late Stream<DeviceOrientation> _onOrientationChange;
 
   static Stream<DeviceOrientation> get onOrientationChange {
     if (_onOrientationChange == null) {
